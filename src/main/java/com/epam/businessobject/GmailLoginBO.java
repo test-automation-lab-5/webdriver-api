@@ -12,10 +12,10 @@ public class GmailLoginBO {
 		GmailLoginPage gmailLoginPage = new GmailLoginPage();
 
 		// Send login to login input and submit form
-		gmailLoginPage.typeLoginAndSubmit("xyz@gmail.com");
+		gmailLoginPage.typeLoginAndSubmit(user.getEmail());
 
 		// Gmail Home PageObject
-		GmailHomePage gmailHomePage = gmailLoginPage.typePasswordAndSubmit("123456");
+		GmailHomePage gmailHomePage = gmailLoginPage.typePasswordAndSubmit(user.getPassword());
 
 		return gmailHomePage.isMyAccountMessageVisible();
 	}

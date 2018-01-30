@@ -9,6 +9,9 @@ import com.epam.businessobject.GmailLoginBO;
 import com.epam.businessobject.GmailSearchBO;
 import com.epam.model.LetterModel;
 import com.epam.model.UserModel;
+import com.sun.jna.platform.win32.Netapi32Util.User;
+
+import ua.windriver.core.WinDriverService;
 
 public class SearchTest {
 
@@ -19,6 +22,7 @@ public class SearchTest {
 
 	@Test
 	public void testSearch() {
+		
 
 		boolean isLoggedIn = loginBO.login(new UserModel());
 

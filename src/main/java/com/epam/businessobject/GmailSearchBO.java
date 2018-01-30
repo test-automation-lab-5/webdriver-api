@@ -1,7 +1,11 @@
 package com.epam.businessobject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import com.epam.model.LetterModel;
@@ -33,4 +37,35 @@ public class GmailSearchBO {
 			return Collections.emptyList();
 		}
 	}
+	
+	public static void main(String[] args) {
+		
+		EnvProperties envProperties =  new EnvProperties();
+		
+		envProperties.getBaseUrl();
+	}
 }
+
+
+class EnvProperties {
+	
+	private Properties properties;
+	
+	public EnvProperties() {
+		
+		properties = new Properties();
+		
+		try {
+			properties.load(new FileInputStream(new File("/path/env.properties")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getBaseUrl () {
+		return properties.getProperty("base.url");
+	}
+}
+
+
+
