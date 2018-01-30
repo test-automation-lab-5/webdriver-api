@@ -37,36 +37,27 @@ public class GoogleTest {
         Actions builder = new Actions( webDriver );
         builder.click( nextButton ).build().perform();
         List<WebElement> checkbox = webDriver.findElements( By.xpath( ".//*[@role='checkbox']" ) );
-        //List<WebElement> subject = webDriver.findElements( By.xpath( "//*[@class='bog']" ) );
-        //  List<String > strings = new ArrayList<String>() ;
         for (int i = 1; i < 4; i++) {
             if (!checkbox.get( i ).isSelected()) {
                 checkbox.get( i ).click();
-                //    strings.set( i,subject.get( i-1 ).getText() );
             }
         }
-
-
-        WebElement delete = webDriver.findElement( By.xpath( ".//*[@id=':5']/div/div[1]/div[1]/div/div/div[2]/div[3]/div/div" ) );
+        WebElement delete = webDriver.findElement( By.xpath( "//div[@act='10']" ) );
         delete.click();
         WebElement undo = webDriver.findElement( By.xpath( ".//*[@id='link_undo']" ) );
         wait.until( ExpectedConditions.elementToBeClickable( undo ) );
         undo.click();
-        int actualResult = 0;
+        int expectedResult = 0;
         List<WebElement> sub = webDriver.findElements( By.xpath( "//*[@class='bog']" ) );
         for (int i = 0; i < sub.size(); i++) {
             if (sub.get( i ).getText().equals( "HomePod. The new sound of home." )) {
-                actualResult += 1;
-                break;
+                expectedResult += 1;
             }
-            Assert.assertNotEquals(0, actualResult);
         }
+        Assert.assertNotEquals( 0, expectedResult );
     }
-
     @AfterMethod
     public final void tearDown() {
         webDriver.quit();
     }
-
-
 }
