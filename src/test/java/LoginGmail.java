@@ -63,7 +63,8 @@ public class LoginGmail {
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//td[@class='oZ-x3 xY']")).click();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.findElement(By.xpath("//div[@act='10']")).click();
+        driver.findElement(By.xpath("//div[@gh='mtb']//div[@act='10']")).click();
+        (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='alertdialog']//button[@name='ok']"))).click();
     }
 }
