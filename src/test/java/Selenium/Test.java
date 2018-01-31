@@ -24,11 +24,10 @@ public class Test {
         WebElement element = driver.findElement(By.name("identifier"));
         element.sendKeys(EMAIL);
         element.sendKeys(Keys.ENTER);
-
+        
         WebElement password = driver.findElement(By.name("password"));
-        WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.elementToBeClickable(password));
-        password.sendKeys(PASSWORD);
+        (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.elementToBeClickable(password)).sendKeys(PASSWORD);
         password.sendKeys(Keys.ENTER);
 
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
@@ -39,15 +38,12 @@ public class Test {
         driver.findElement(By.xpath("//div[@class='Am Al editable LW-avf']")).sendKeys(MESSAGE);
         driver.findElement(By.xpath("//div[@class='T-I J-J5-Ji aoO T-I-atl L3']")).click();
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.linkText("Надіслані")).click();
         Assert.assertFalse(null== driver.findElement(By.name("kristinabilokura")));
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(1000);
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='main']//div[@role='checkbox']"))).click();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//div[@act='10']")).click();
 
         driver.close();
