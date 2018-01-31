@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -24,7 +25,7 @@ public class GoogleTest {
         System.setProperty( "webdriver.chrome.driver", "src/resourses/chromedriver.exe" );
         webDriver = new ChromeDriver();
         webDriver.get( "https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&osid=1&service=mail&ss=1&ltmpl=default&rm=false&flowName=GlifWebSignIn&flowEntry=ServiceLogin" );
-        webDriver.manage().timeouts().implicitlyWait( 15, TimeUnit.SECONDS );
+        webDriver.manage().timeouts().implicitlyWait( 45, TimeUnit.SECONDS );
         webDriver.manage().window().maximize();
         WebElement enterEmail = webDriver.findElement( By.xpath( "//*[@id='identifierId']" ) );
         enterEmail.sendKeys( "annrusnaktest12345@gmail.com" );
@@ -47,14 +48,16 @@ public class GoogleTest {
         WebElement undo = webDriver.findElement( By.xpath( ".//*[@id='link_undo']" ) );
         wait.until( ExpectedConditions.elementToBeClickable( undo ) );
         undo.click();
+        WebElement canceled = webDriver.findElement( By.xpath( ".//*[@class='bofITb']" ) );
+        wait.until( ExpectedConditions.elementToBeClickable( canceled )  );
         int expectedResult = 0;
         List<WebElement> sub = webDriver.findElements( By.xpath( "//*[@class='bog']" ) );
-        for (int i = 0; i < sub.size(); i++) {
-            if (sub.get( i ).getText().equals( "HomePod. The new sound of home." )) {
+        for (WebElement el: sub) {
+            if (el.getText().equals( "HomePod. The new sound of home." )) {
                 expectedResult += 1;
             }
         }
-        Assert.assertNotEquals( 0, expectedResult );
+        Assert.assertNotNull(  expectedResult );
     }
     @AfterMethod
     public final void tearDown() {
