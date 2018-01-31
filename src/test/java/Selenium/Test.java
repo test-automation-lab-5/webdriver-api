@@ -39,7 +39,7 @@ public class Test {
         driver.findElement(By.xpath("//div[@class='T-I J-J5-Ji aoO T-I-atl L3']")).click();
 
         driver.findElement(By.linkText("Надіслані")).click();
-        Assert.assertFalse(null== driver.findElement(By.name("kristinabilokura")));
+        Assert.assertFalse(null== driver.findElement(By.name("Kristina Bilokura")));
 
         Thread.sleep(1000);
         (new WebDriverWait(driver, 10))
