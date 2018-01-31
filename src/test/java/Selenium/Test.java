@@ -51,16 +51,5 @@ public class Test {
         driver.findElement(By.xpath("//div[@act='10']")).click();
 
         driver.close();
-
-
-
-
-
-
-
-
-
-
-
     }
 }
