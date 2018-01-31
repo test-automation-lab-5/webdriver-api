@@ -24,12 +24,12 @@ public class LoginGmail {
     public static void setUpDriver() {
         System.setProperty("webdriver.chrome.driver", DRIVER_URL);
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get(URL);
     }
 
     @Test
     public void openLogin() {
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         WebElement email_phone = driver.findElement(By.xpath("//input[@id='identifierId']"));
         email_phone.sendKeys(YOUR_EMAIL);
         driver.findElement(By.xpath("//content[@class='CwaK9']")).click();
@@ -40,28 +40,20 @@ public class LoginGmail {
         driver.findElement(By.className("CwaK9")).click();
         driver.findElement(By.className("WaidBe")).click();
 
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         WebElement send = driver.findElement(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']"));
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         send.click();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//textarea[@class='vO']")).sendKeys(SEND_TO);
         driver.findElement(By.xpath("//input[@class='aoT']")).sendKeys(SUBJECT);
         driver.findElement(By.xpath("//div[@class='Am Al editable LW-avf']")).sendKeys(MESSAGE);
 
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         WebElement sendButton = driver.findElement(By.xpath("//div[@class='J-J5-Ji btA']"));
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         sendButton.click();
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.linkText("Sent Mail")).click();
 
-        driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
         String messageElement = driver.findElement(By.xpath("//*[@class='bog']//*[text()='TestTwo']")).getText();
         Assert.assertEquals("TestTwo", messageElement);
         
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//td[@class='oZ-x3 xY']")).click();
         driver.findElement(By.xpath("//div[@gh='mtb']//div[@act='10']")).click();
         (new WebDriverWait(driver, 10))
