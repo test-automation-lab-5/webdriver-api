@@ -46,7 +46,6 @@ public class Test {
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='main']//div[@role='checkbox']"))).click();
         driver.findElement(By.xpath("//div[@gh='tm']//div[@act='10']")).click();
         driver.findElement(By.name("ok")).click();
-
         driver.close();
     }
 }
