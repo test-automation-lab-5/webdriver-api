@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestCrome {
-    private final static String login = "INPUT YOUR LOGIN HERE, PLEASE";
-    private final static String Password = "INPUT YOUR PASSWORD HERE, PLEASE";
+    private final static String login = "olenkaklyuka@gmail.com";
+    private final static String Password = "Summers98@";
     private WebDriver driver;
 
     @BeforeClass
@@ -69,10 +70,7 @@ public class TestCrome {
             checkboxStared.get(i).click();
             idListStared.add(checkboxStared.get(i).getAttribute("id"));
         }
-
-        if (idList.equals(idListStared)) {
-            System.out.println("They are indeed equal!  VERIFICATION  PASSED !");
-        }
+        Assert.assertEquals(idList, idListStared);
     }
 
     @Test(priority = 4)
