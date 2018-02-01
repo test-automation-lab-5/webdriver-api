@@ -11,13 +11,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-public class TestCrome {
-    private final static String login = "olenkaklyuka@gmail.com";
-    private final static String Password = "Summers98@";
+public class TestChrome {
+    private final static String login = "olenkatestepam@gmail.com";
+    private final static String Password = "testepam";
     private WebDriver driver;
 
     @BeforeClass
@@ -30,8 +30,6 @@ public class TestCrome {
 
     @Test(priority = 1)
     public void testLogin() {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
         WebElement loginElement = driver.findElement(By.xpath("//input[@type='email']"));
         loginElement.sendKeys(login);
         driver.findElement(By.id("identifierNext")).click();
@@ -39,6 +37,7 @@ public class TestCrome {
 
     @Test(priority = 2)
     public void testPassword() {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement password = driver.findElement(By.xpath("//input[@name='password']"));
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.elementToBeClickable(password));
@@ -49,37 +48,48 @@ public class TestCrome {
 
     @Test(priority = 3)
     public void testImportantLetters() {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='checkbox']")));
 
         List<WebElement> checkboxs = driver.findElements(By.xpath("//div[@role='checkbox']"));
-        List<String> idList = new ArrayList<String>();
         for (int i = 0; i < 3; i++) {
             checkboxs.get(i).click();
-            idList.add(checkboxs.get(i).getAttribute("id"));
         }
+        List<String>idList=(checkboxs.stream().map(x->x.getAttribute("id")).collect(Collectors.toList()));
+
         driver.findElement(By.className("bjy")).click();
         driver.findElement(By.xpath("//div[text()='Add star']")).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.className("nU")).click();
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='checkbox']")));
-
-        List<WebElement> checkboxStared = driver.findElements(By.xpath("//div[@role='checkbox']"));
-        List<String> idListStared = new ArrayList<String>();
+        List<WebElement> stared = driver.findElements(By.xpath("//div[@role='checkbox']"));
         for (int i = 0; i < 3; i++) {
-            checkboxStared.get(i).click();
-            idListStared.add(checkboxStared.get(i).getAttribute("id"));
+            stared.get(i).click();
         }
-        Assert.assertEquals(idList, idListStared);
+        List<String>idStared=(stared.stream().map(x->x.getAttribute("id")).collect(Collectors.toList()));
+        Assert.assertEquals(idStared, idList);
     }
 
     @Test(priority = 4)
     public void testDelete() {
-        List<WebElement> checkboxDelete = driver.findElements(By.xpath("//div[@role='checkbox']"));
+        List<WebElement> cToDelete = driver.findElements(By.xpath("//div[@role='checkbox']"));
         for (int i = 0; i < 3; i++) {
-            checkboxDelete.get(i).click();
+            cToDelete.get(i).click();
         }
+        //List<String>toDelete=(cToDelete.stream().map(x->x.getAttribute("id")).collect(Collectors.toList()));
         driver.findElement(By.xpath("//div[@act='10']")).click();
+
+        driver.findElement(By.className("CJ")).click();
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://mail.google.com/mail/#trash']"))).click();
+/*
+        List<WebElement> deleted = driver.findElements(By.xpath("//div[@role='checkbox']"));
+        for (int i = 0; i < 3; i++) {
+            deleted.get(i).click();
+        }
+        List<String>idDeleted=(deleted.stream().map(x->x.getAttribute("id")).collect(Collectors.toList()));
+        Assert.assertEquals(idDeleted, toDelete);*/
     }
 
     @AfterClass
