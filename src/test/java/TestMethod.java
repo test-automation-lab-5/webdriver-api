@@ -37,6 +37,8 @@ public class TestMethod {
         for (int i = 0; i < 50; i++) {
             MESSAGE += (char) (random.nextInt(78) + 48);
         }
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @AfterMethod
@@ -47,19 +49,17 @@ public class TestMethod {
     @Test
     public void SomeStrangeActionsWithGmail() {
         driver.get(GMAIL);
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//input[@type='email' and @class='whsOnd zHQkBf']")).sendKeys(EMAIL);
         driver.findElement(By.xpath("//div[@class='O0WRkf zZhnYe e3Duub C0oVfc Zp5qWd Hj2jlf dKVcQ']")).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//*[@id='password']/div[1]/div/div[1]/input")).sendKeys(PASSWORD);
         ((JavascriptExecutor) driver).executeScript("document.getElementById('passwordNext').click()");
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']")).click();
 
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.elementToBeClickable(By
                         .xpath("//textarea[@name='to']"))).sendKeys(TO);
+        
         driver.findElement(By.xpath("//span[@class='aB gQ pE']")).click();
         driver.findElement(By.xpath("//textarea[@name='cc']")).sendKeys(CC);
         driver.findElement(By.xpath("//span[@class='aB  gQ pB']")).click();
@@ -68,7 +68,6 @@ public class TestMethod {
         driver.findElement(By.xpath("//div[@class=\"Am Al editable LW-avf\"]")).sendKeys(MESSAGE);
         driver.findElement(By.xpath("//img[@alt='Close']")).click();
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//a[@href='https://mail.google.com/mail/#drafts']")).click();
         (new WebDriverWait(driver, 3))
                 .until(ExpectedConditions.textToBePresentInElementValue(By
