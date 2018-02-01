@@ -49,7 +49,7 @@ public class Test {
         driver.findElement(By.xpath("//a[@href='https://mail.google.com/mail/u/0/#sent']")).click();
        // driver.findElement(By.linkText("Надіслані")).click();
         //Assert.assertFalse(null== driver.findElement(By.name("Kristina Bilokura")));
-        assertNotNull(driver.findElement(By.name("Kristina Bilokura")));
+        assertNotNull(driver.findElement(By.xpath("//*[@email='" + String.format("%s", ADDRESSE) + "']")));
 
         Thread.sleep(1000);
         (new WebDriverWait(driver, 10))
@@ -58,7 +58,7 @@ public class Test {
         driver.findElement(By.name("ok")).click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         try {
-            driver.findElement(By.name("Kristina Bilokura"));
+            driver.findElement(By.xpath("//*[@email='" + String.format("%s", ADDRESSE) + "']"));
             Assert.fail("expecting NoSuchElementException here");
         } catch (Exception e) {
         }
