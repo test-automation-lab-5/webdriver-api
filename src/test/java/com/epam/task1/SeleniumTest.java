@@ -17,28 +17,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class SeleniumTest {
+public class SeleniumTest implements Variables{
     private static WebDriver driver;
-    private static String URL = "https://accounts.google.com/signin";
-    private static String DRIVER_URL = "src/main/resources/chromedriver.exe";
-    private static String LOGIN = "jamesdaw11101993@gmail.com";
-    private static String PASSWORD = "7483145okokokokok";
-    private static String RECEIVER = "jamesdaw11101993@gmail.com";
-    private static String SUBJECT = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-    private static String MESSAGE = "test message";
 
     @BeforeClass
     public static void launch() {
         System.setProperty("webdriver.chrome.driver", DRIVER_URL);
         driver = new ChromeDriver();
         driver.get(URL);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
     }
 
     @Test
     public void writeLetter() {
 
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         WebElement email = driver.findElement(By.xpath("//input[@id='identifierId']"));
         email.clear();
@@ -53,10 +47,10 @@ public class SeleniumTest {
         password.sendKeys(PASSWORD);
         driver.findElement(By.id("passwordNext")).click();
 
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement gmail = driver.findElement(By.className("WaidBe"));
         wait.until(ExpectedConditions.elementToBeClickable(gmail));
         gmail.click();
+
 
         WebElement compose = driver.findElement(By.xpath("//div[@class='T-I J-J5-Ji T-I-KE L3']"));
         wait.until(ExpectedConditions.elementToBeClickable(compose));
@@ -69,23 +63,27 @@ public class SeleniumTest {
 
         driver.findElement(By.cssSelector("div[data-tooltip*='Enter']")).click();
 
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//a[@href='https://mail.google.com/mail/u/0/#sent']")).click();
-        (new WebDriverWait(driver, 10))
+        (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='main']//div[@role='checkbox']")));
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        Assert.assertEquals(SUBJECT, driver.findElement(By.xpath("//*[@class='bog']//*[text()='" + SUBJECT + "']")).getText());
+
 
         List<WebElement> checkboxs = driver.findElements(By.xpath("//div[@role='main']//div[@role='checkbox']"));
         checkboxs.get(0).click();
 
         driver.findElement(By.xpath("//div[@gh='mtb']//div[@act='10']")).click();
-        (new WebDriverWait(driver, 10))
+        (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@role='alertdialog']//button[@name='ok']"))).click();
-    }
 
+        (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@role='button']"))).click();
+        (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://mail.google.com/mail/u/0/#trash']"))).click();
+        Assert.assertEquals(SUBJECT, driver.findElement(By.xpath("//*[@class='bog']//*[text()='" + SUBJECT + "']")).getText());
+    }
     @AfterClass
     public static void closeBrowser(){
         driver.quit();
     }
+    
 }
